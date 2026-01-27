@@ -236,7 +236,7 @@ public class AStarSystem : IDisposable
                     data.comeFrom = comeFrom;
                     pathfindingData.TryAdd(x * boardWidth + z, data);
                     // heuristic cost:
-                    hvalue = manhattanDistance(goal, pos);
+                    hvalue = euclideanDistance(goal, pos);
                     priority = newCost + hvalue;
                     priorityQueue.Enqueue(pos, priority);
                     Debug.DrawLine(new Vector3(x - 0.5f, 1, z - 0.5f),
