@@ -1,5 +1,4 @@
 using System;
-using System.Numerics;
 using UnityEngine;
 
 public class Main : MonoBehaviour
@@ -7,7 +6,7 @@ public class Main : MonoBehaviour
     public float Mass = 1;
     public float MaxForce = 1;
     public float MaxSpeed = 0.01f;
-    public float SlowingDistance = 10.0f;
+    public float SlowingDistance = 3.0f;
     public GameObject vehicleModel;
     public GameObject targetModel;
 
@@ -23,7 +22,6 @@ public class Main : MonoBehaviour
         vehicleData.max_speed = MaxSpeed;
         vehicleData.velocity = Vector3.zero;
         vehicleData.pos = vehicleModel.transform.position;
-
     }
 
     // Update is called once per frame
@@ -52,7 +50,7 @@ public class Main : MonoBehaviour
     /// <param name="target"></param>
     public void Seek(ref VehicleData data, Vector3 target)
     {
-        Vector3 desired_velocity = Vector3.Normalize((target - data.pos) * data.max_speed);
+        Vector3 desired_velocity = Vector3.Normalize(target - data.pos) * data.max_speed;
         Vector3 steering = desired_velocity - data.velocity;
         steering = truncateLength(steering, data.max_force);
         Vector3 acceleration = steering / data.mass;
@@ -68,7 +66,7 @@ public class Main : MonoBehaviour
     /// <param name="target"></param>
     public void Flee(ref VehicleData data, Vector3 target)
     {
-        Vector3 desired_velocity = Vector3.Normalize((data.pos - target) * data.max_speed);
+        Vector3 desired_velocity = Vector3.Normalize(data.pos - target) * data.max_speed;
         Vector3 steering = desired_velocity - data.velocity;
         steering = truncateLength(steering, data.max_force);
         Vector3 acceleration = steering / data.mass;
